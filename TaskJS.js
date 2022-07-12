@@ -65,16 +65,16 @@ function Displayusers(user){
     let parentnode=document.getElementById('Userlist');
     let child_node=`<li id=${user._id}> ${user.Amount}--${user.Description}--${user.Category}
                     <button onclick=DeleteExpense('${user._id}')>Delete Expense</button>
-                    <button onclick=EditExpense('${user._id}','${user.Description}','${user.Category}')>Edit Expense </button>
+                    <button onclick=EditExpense('${user.Amount}','${user.Description}','${user.Category},${user._id}')>Edit Expense </button>
                 </li>`
     parentnode.innerHTML=parentnode.innerHTML+child_node;
 }
 
-function EditExpense(Amount,Description,Category){
+function EditExpense(Amount,Description,Category,userId){
     document.getElementById('Amt').value=Amount;
     document.getElementById('Desc').value=Description;
     document.getElementById('Cat').value=Category;
-    DeleteExpense(Amount);
+    DeleteExpense(userId);
 }
 
 function DeleteExpense(userId){
