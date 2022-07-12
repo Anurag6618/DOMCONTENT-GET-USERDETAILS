@@ -20,7 +20,7 @@ function NewItem(e){
         Amount,Description,Category
     }
 
-    axios.post('https://crudcrud.com/api/6f928ad36ee04943b0295cfa34bf2510/appointmentdata',obj)
+    axios.post('https://crudcrud.com/api/d533166f11aa442a87de1ea8bd6bad31/appointmentdata',obj)
     .then((respose)=>{
         Displayusers(respose.data)
         //console.log(response)
@@ -36,7 +36,7 @@ function NewItem(e){
 //After refreshing the details shouldn get loaded
 window.addEventListener("DOMContentLoaded", () => {
 
-    axios.get('https://crudcrud.com/api/6f928ad36ee04943b0295cfa34bf2510/appointmentdata')
+    axios.get('https://crudcrud.com/api/d533166f11aa442a87de1ea8bd6bad31/appointmentdata')
     .then((response)=>{
        
         
@@ -60,10 +60,12 @@ window.addEventListener("DOMContentLoaded", () => {
 })
 
 function Displayusers(user){
+
+
     let parentnode=document.getElementById('Userlist');
-    let child_node=`<li id=${user.Amount}> ${user.Amount}--${user.Description}--${user.Category}
-                    <button onclick=DeleteExpense('${user.Amount}')>Delete Expense</button>
-                    <button onclick=EditExpense('${user.Amount}','${user.Description}','${user.Category}')>Edit Expense </button>
+    let child_node=`<li id=${user._id}> ${user.Amount}--${user.Description}--${user.Category}
+                    <button onclick=DeleteExpense('${user._id}')>Delete Expense</button>
+                    <button onclick=EditExpense('${user._id}','${user.Description}','${user.Category}')>Edit Expense </button>
                 </li>`
     parentnode.innerHTML=parentnode.innerHTML+child_node;
 }
@@ -75,10 +77,18 @@ function EditExpense(Amount,Description,Category){
     DeleteExpense(Amount);
 }
 
-function DeleteExpense(UserAmount){
+function DeleteExpense(userId){
     
-    localStorage.removeItem(UserAmount);
-    DeletefromScreen(UserAmount)
+     axios.delete(`https://crudcrud.com/api/d533166f11aa442a87de1ea8bd6bad31/appointmentdata/${userId}`)
+     .then((response)=>{
+       
+        DeletefromScreen(userId)  
+
+     })
+     .catch((err) => cosole.log(error))
+        
+
+    
 }
 
 function DeletefromScreen(UserAmount){
